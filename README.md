@@ -1,15 +1,14 @@
 Tool to compare two sets of geometrical segmentations (ground truth and program output, two program outputs, etc.) and compute quality metrics. The target application is document image segmentation evaluation, analysis and improvement.
 
 
-
 The core algorithm is based on this paper:
-
+~~~
 Shafait, F., Keysers, D., & Breuel, T. M. (2008). Performance evaluation and benchmarking of six-page segmentation algorithms. Pattern Analysis and Machine Intelligence, IEEE Transactions on, 30(6), 941-954.
-
+~~~
 and also on the adaptation proposed here:
-
+~~~
 Say, V., Coustaty, M., Chazalon, J., Burie, J.-C., & Ogier, J.-M. "Segmentation System and its Evaluation for Gray Scale Coin Documents". In Proceeding of the 4th International Conference on Image Processing Theory, Tools and Applications (IPTA), 2014, Paris, France.
-
+~~~
 Additional inspiration comes from PrimaResearch tools, hOCR tools, UNLV ISRI tools and many others.
 
 
@@ -21,8 +20,19 @@ An annotation is an type indicator, and a value (not used for now).
 
 
 Usage:
+~~~
     eval_geom.py path/to/referenceoutput path/to/testoutput -o optional/output.csv
+~~~
 
+To support your own data format you just need to:
+- code a new class child of drivers.InputDriver.InputDriver: the load
+  function takes a filename and returns a list of
+  SegmentationAnnotation =
+  namedtuple("SegmentationAnnotation", ["shape", "type", "attributes"])
+  (examples in plugin_numis)
+- import the new class into eval_geom.py
+- add it to the list of classes used to load your files (lines
+  324-328)
 
 
 
